@@ -1,0 +1,779 @@
+[
+	{
+		"author":"Dyne.org",
+		"name":"Generate a keypair",
+		"zencode":"Scenario 'ecdh': Create the keypair\nGiven that I am known as 'Alice'\nWhen I create the keypair\nThen print my data\n",
+		"keys":"",
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Generate a keypair, reading identity from data",
+		"zencode":"Scenario 'ecdh': Create the keypair from a name passed from data/keys\r\n\r\n# Here we load the identity of the executor\r\nGiven my name is in a 'string' named 'myName'\r\n\r\n# Here we generate and print the keypair\r\nWhen I create the keypair\r\nThen print my data",
+		"keys":{
+			"myName":"User123456"
+		},
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Generate a random cryptographic object",
+		"zencode":"rule check version 1.0.0\nScenario simple: Generate a random object\nGiven nothing\nWhen I create the random object of '128' bits\nWhen I rename the 'random_object' to 'my128BitsRandom'\nThen print the 'my128BitsRandom'\n",
+		"keys":"",
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Encrypt a message using a password",
+		"zencode":"Scenario 'ecdh': Encrypt a message with the password \nGiven that I have a 'string' named 'password' \nGiven that I have a 'string' named 'header' \nGiven that I have a 'string' named 'message' \nWhen I encrypt the secret message 'message' with 'password' \nThen print the 'secret message'",
+		"keys":{
+			"password":"myVerySecretPassword"
+		},
+		"data":{
+			"header":"A very important secret",
+			"message":"Dear Bob, your name is too short, goodbye - Alice."
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Decrypt a secret message using a password",
+		"zencode":"Scenario 'ecdh': Decrypt the message with the password \nGiven that I have a valid 'secret message' \nGiven that I have a 'string' named 'password' \nWhen I decrypt the text of 'secret message' with 'password' \nWhen I rename the 'text' to 'textDecrypted' \nThen print the 'textDecrypted' as 'string'\n",
+		"keys":{
+			"password":"myVerySecretPassword"
+		},
+		"data":{
+			"secret_message":{
+				"checksum":"76U+nWVZBwBMbOOktCnZug==",
+				"header":"QSB2ZXJ5IGltcG9ydGFudCBzZWNyZXQ=",
+				"iv":"R+B2z2pTLkMVGFCuFHnYL5sAIeuolYmgUOdMm2AOvTI=",
+				"text":"Df8C8Kkd+ngVAi/tGUe905VPTwId4hv+iL31dgylkDaDumI3BpRO5bN1qKfSsBi2KOA="
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Encrypt a message for two recipients using  asymmetric cryptography (ECDH)",
+		"zencode":"Rule check version 1.0.0 \nScenario 'ecdh': Alice encrypts a message for Bob \nGiven that I am known as 'Alice' \nGiven that I have my valid 'keypair' \nGiven that I have a valid 'public key' from 'Bob' \nGiven that I have a valid 'public key' from 'Carl' \nGiven that I have a 'string' named 'message' \nGiven that I have a 'string' named 'header' \nWhen I encrypt the secret message of 'message' for 'Bob' \nWhen I rename the 'secret message' to 'secretForBob' \nWhen I encrypt the secret message of 'message' for 'Carl'\nWhen I rename the 'secret message' to 'secretForCarl' \nThen print the 'secretForBob' \nThen print the 'secretForCarl' \n",
+		"keys":{
+			"Alice":{
+				"keypair":{
+					"private_key":"WBdsWLDno9/DNaap8cOXyQsCG182NJ0ddjLo/k05mgs=",
+					"public_key":"BNRzlJ4csYlWgycGGiK/wgoEw3OizCdx9MWg06rxUBTP5rP9qPASOW5KY8YgmNjW5k7lLpboboHrsApWsvgkMN4="
+				}
+			}
+		},
+		"data":{
+			"Bob":{
+				"public_key":"BBA0kD35T9lUHR/WhDwBmgg/vMzlu1Vb0qtBjBZ8rbhdtW3AcX6z64a59RqF6FCV5q3lpiFNTmOgA264x1cZHE0="
+			},
+			"Carl":{
+				"public_key":"BLdpLbIcpV5oQ3WWKFDmOQ/zZqTo93cT1SId8HNITgDzFeI6Y3FCBTxsKHeyY1GAbHzABsOf1Zo61FRQFLRAsc8="
+			},
+			"message":"Dear Bob and Carl, if you are reading this, then we're not friend anymore. Goodbye.",
+			"header":"Secret message for Bob and Carl"
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Decrypts a secret message using asymmetric cryptography (ECDH)",
+		"zencode":"Rule check version 1.0.0 \nScenario 'ecdh': Bob decrypts the message from Alice \nGiven that I am known as 'Bob' \nGiven I have my 'keypair' \nGiven I have a 'public key' from 'Alice' \nGiven I have a 'secret message' named 'secretForBob' \nWhen I decrypt the text of 'secretForBob' from 'Alice' \nWhen I rename the 'text' to 'textForBob' \nThen print the 'textForBob' as 'string' \nThen print the 'header' as 'string' inside 'secretForBob' \n",
+		"keys":{
+			"Bob":{
+				"keypair":{
+					"private_key":"psBF05iHz/X8WBpwitJoSsZ7BiKawrdaVfQN3AtTa6I=",
+					"public_key":"BBA0kD35T9lUHR/WhDwBmgg/vMzlu1Vb0qtBjBZ8rbhdtW3AcX6z64a59RqF6FCV5q3lpiFNTmOgA264x1cZHE0="
+				}
+			}
+		},
+		"data":{
+			"Alice":{
+				"public_key":"BNRzlJ4csYlWgycGGiK/wgoEw3OizCdx9MWg06rxUBTP5rP9qPASOW5KY8YgmNjW5k7lLpboboHrsApWsvgkMN4="
+			},
+			"secretForBob":{
+				"checksum":"sxoO1vewQmL8skCmfeiFgw==",
+				"header":"U2VjcmV0IG1lc3NhZ2UgZm9yIEJvYiBhbmQgQ2FybA==",
+				"iv":"AngaB+wTbAKWFDayWE2yWVSDD1f/w+lI+LkV0B8tIyM=",
+				"text":"S2+pJNXhLgT46/ztk/XAJOWdl3jWR4svI170Me38bWHmvS3+kqZxkW2GIZJiw4C4GkdJ8MM2lvQJcP/GWM/7k+mc/XQoxI86Yu4RgCPqYJ+sKD0="
+			},
+			"secretForCarl":{
+				"checksum":"7cA6o2Ipf7gtlPWfZzPJGw==",
+				"header":"U2VjcmV0IG1lc3NhZ2UgZm9yIEJvYiBhbmQgQ2FybA==",
+				"iv":"nX3BsOxtLWLVldnEFhRYXtnOVgAGZXoUroTzvE9GGkQ=",
+				"text":"eVzpDLQTFwgeothE0pacc/J5prjtEMSDJn/ZDprWk3EB7LQD6Kemr2x4vcZ0bEh1nIvIWDZ+imSRL3PPcqJclH5IALjl6zhascYlC9xbibXaTJM="
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Sign objects using asymmetric cryptography (ECDSA)",
+		"zencode":"Scenario 'ecdh': create the signature of an object \nGiven I am 'Alice' \nGiven I have my 'keypair' \nGiven that I have a 'string' named 'myMessage' inside 'mySecretStuff' \nGiven I have a 'string array' named 'myStringArray' \nWhen I create the signature of 'myStringArray' \nWhen I rename the 'signature' to 'myStringArray.signature' \nWhen I create the signature of 'keypair' \nWhen I rename the 'signature' to 'keypair.signature' \nWhen I create the signature of 'myMessage' \nWhen I rename the 'signature' to 'myMessage.signature' \nThen print the 'myMessage' \nThen print the 'myMessage.signature' \nThen print the 'myStringArray' \nThen print the 'myStringArray.signature' \nThen print the 'keypair' \nThen print the 'keypair.signature' \n",
+		"keys":{
+			"Alice":{
+				"keypair":{
+					"private_key":"Aku7vkJ7K01gQehKELav3qaQfTeTMZKgK+5VhaR3Ui0=",
+					"public_key":"BBCQg21VcjsmfTmNsg+I+8m1Cm0neaYONTqRnXUjsJLPa8075IYH+a9w2wRO7rFM1cKmv19Igd7ntDZcUvLq3xI="
+				}
+			}
+		},
+		"data":{
+			"mySecretStuff":{
+				"myMessage":"Dear Bob, your name is too short, goodbye - Alice."
+			},
+			"myStringArray":[
+				"Hello World! This is my string array, element [0]",
+				"Hello World! This is my string array, element [1]",
+				"Hello World! This is my string array, element [2]"
+			]
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Verify a signature using asymmetric cryptography (ECDSA)",
+		"zencode":"rule check version 1.0.0 \nScenario 'ecdh': Bob verifies the signature from Alice \nGiven that I am known as 'Bob' \n Given I have a 'public key' from 'Alice' \nGiven I have a 'string' named 'myMessage' \nGiven I have a 'signature' named 'myMessage.signature' \nGiven I have a 'string array' named 'myStringArray' \nGiven I have a 'signature' named 'myStringArray.signature' \nWhen I verify the 'myMessage' has a signature in 'myMessage.signature' by 'Alice' \nWhen I verify the 'myStringArray' has a signature in 'myStringArray.signature' by 'Alice' \nThen print 'Zenroom certifies that signatures are all correct!' as 'string' \nThen print the 'myMessage' \n",
+		"keys":{
+			"Alice":{
+				"public_key":"BBCQg21VcjsmfTmNsg+I+8m1Cm0neaYONTqRnXUjsJLPa8075IYH+a9w2wRO7rFM1cKmv19Igd7ntDZcUvLq3xI="
+			}
+		},
+		"data":{
+			"keypair":{
+				"private_key":"Aku7vkJ7K01gQehKELav3qaQfTeTMZKgK+5VhaR3Ui0=",
+				"public_key":"BBCQg21VcjsmfTmNsg+I+8m1Cm0neaYONTqRnXUjsJLPa8075IYH+a9w2wRO7rFM1cKmv19Igd7ntDZcUvLq3xI="
+			},
+			"keypair.signature":{
+				"r":"UlrY1tYFXt0ClYncu51upl/wPPgGthEajxAxs8Ia/g4=",
+				"s":"rkpKyzEJ6Sg3bgyyYDqYwZH7gDnbMBO6W0+yzpmej0o="
+			},
+			"myMessage":"Dear Bob, your name is too short, goodbye - Alice.",
+			"myMessage.signature":{
+				"r":"vWerszPubruWexUib69c7IU8Dxy1iisUmMGC7h7arDw=",
+				"s":"nSjxT+JAP56HMRJjrLwwB6kP+mluYySeZcG8JPBGcpY="
+			},
+			"myStringArray":[
+				"Hello World! This is my string array, element [0]",
+				"Hello World! This is my string array, element [1]",
+				"Hello World! This is my string array, element [2]"
+			],
+			"myStringArray.signature":{
+				"r":"B8qrQqYSWaTf5Q16mBCjY1tfsD4Cf6ZSMJTHCCV8Chg=",
+				"s":"S1/Syca6+XozVr5P9fQ6/AkQ+fJTMfwc063sbKmZ5B4="
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Operations with arrays: hash, insert, copy",
+		"zencode":"Given I have a 'string array' named 'myArrayToBeHashed' \r\nGiven I have a 'string' named 'myString'\r\n\r\n# Default hashing (using sha256) \r\nWhen I create the hash of 'myArrayToBeHashed' \r\nWhen I rename the 'hash' to 'myHashedArray'\r\n\r\n# Hashing using sha512\r\nWhen I create the hash of 'myArrayToBeHashed' using 'sha512' \r\nWhen I rename the 'hash' to 'mysha512HashedArray' \r\n\r\n# Copy one array element into a simple object\r\nWhen I create the copy of element '3' in array 'myArrayToBeHashed'\r\nWhen I rename the 'copy' to 'RingosEmail' \r\n\r\n# Insert the value of a simple object into an array \r\nWhen I insert 'myString' in 'myArrayToBeHashed'\r\n\r\nThen print 'myHashedArray' \r\nThen print 'mysha512HashedArray' \r\nThen print 'RingosEmail'",
+		"keys":{
+			
+		},
+		"data":{
+			"myArrayToBeHashed":[
+				"john@beatles.com",
+				"paul@beatles.com",
+				"ringo@beatles.com",
+				"george@beatles.com"
+			],
+			"myString":"I love Liverpool!"
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Operations with dictionaries (large script)",
+		"zencode":"Rule check version 1.0.0\r\nScenario 'ecdh': keypair management and ECDSA signature\r\n\r\n# Here we load everything we need\r\nGiven that I am 'JackInTheShop' \r\nGiven that I have my valid 'keypair' \r\nGiven that I have a 'string' named 'dictionaryToBeFound'\r\nGiven that I have a 'string dictionary' named 'TransactionsBatchA'\r\nGiven that I have a 'number' named 'salesStartTimestamp'\r\n\r\n# Here we search if a certain dictionary exists in the list\r\nWhen the 'dictionaryToBeFound' is found in 'TransactionsBatchA'\r\n\r\n# Here we find the highest value of an element, in all dictionaries\r\nWhen I find the max value 'PricePerKG' for dictionaries in 'TransactionsBatchA'\r\nand I rename the 'max value' to 'maxPricePerKG'\r\n\r\n# Here we sum the values of an element, from all dictionaries\r\nWhen I create the sum value 'TransactionValue' for dictionaries in 'TransactionsBatchA' \r\nand I rename the 'sum value' to 'sumValueAllTransactions'\r\n\r\n# Here we sum the values of an element, from all dictionaries, with a condition\r\nWhen I create the sum value 'TransferredProductAmount' for dictionaries in 'TransactionsBatchA' where 'timestamp' > 'salesStartTimestamp'\r\nand I rename the 'sum value' to 'transferredProductAmountafterSalesStart'\r\n\r\n# Here we create a dictionary\r\nWhen I create the 'number dictionary'\r\nand I rename the 'number dictionary' to 'salesReport'\r\n\r\n# Copy a dictionary nested to the root level of data\r\nWhen I create the copy of 'Information' from dictionary 'TransactionsBatchA'\r\nand I rename the 'copy' to 'InformationBatchA'\r\n\r\n# Here we insert elements into the newly created dictionary\r\nWhen I insert 'maxPricePerKG' in 'salesReport' \r\nWhen I insert 'sumValueAllTransactions' in 'salesReport' \r\nWhen I insert 'transferredProductAmountafterSalesStart' in 'salesReport' \r\n\r\n# Hash dictionaries, using default (sha256) or sha512\r\nWhen I create the hash of 'InformationBatchA' \r\nWhen I rename the 'hash' to 'sha256hashOfInformationBatchA' \r\n\r\nWhen I create the hash of 'salesReport' using 'sha512' \r\nWhen I rename the 'hash' to 'sha512hashOfsalesReport' \r\n\r\n# Here we produce an ECDSA signature the newly created dictionary using\r\nWhen I create the signature of 'salesReport'\r\nand I rename the 'signature' to 'salesReport.signature'\r\n\r\n#Print out the data we produced along \r\n# We also print the dictionary \"Information\" as hex, just for fun\r\nThen print the 'salesReport'\r\nThen print the 'salesReport.signature'\r\nThen print the 'Information' as 'hex' inside 'TransactionsBatchA' \r\nThen print the 'InformationBatchA'\r\nThen print the 'sha256hashOfInformationBatchA' \r\nThen print the 'sha512hashOfsalesReport' ",
+		"keys":{
+			"JackInTheShop":{
+				"keypair":{
+					"private_key":"Aku7vkJ7K01gQehKELav3qaQfTeTMZKgK+5VhaR3Ui0=",
+					"public_key":"BBCQg21VcjsmfTmNsg+I+8m1Cm0neaYONTqRnXUjsJLPa8075IYH+a9w2wRO7rFM1cKmv19Igd7ntDZcUvLq3xI="
+				}
+			}
+		},
+		"data":{
+			"TransactionsBatchA":{
+				"Information":{
+					"Metadata":"TransactionsBatchB6789",
+					"Buyer":"John Doe"
+				},
+				"ABC-Transactions1Data":{
+					"timestamp":1597573139,
+					"TransactionValue":1500,
+					"PricePerKG":100,
+					"TransferredProductAmount":15,
+					"UndeliveredProductAmount":7,
+					"ProductPurchasePrice":50
+				},
+				"ABC-Transactions2Data":{
+					"timestamp":1597573239,
+					"TransactionValue":1600,
+					"TransferredProductAmount":20,
+					"PricePerKG":80
+				},
+				"ABC-Transactions3Data":{
+					"timestamp":1597573340,
+					"TransactionValue":700,
+					"PricePerKG":70,
+					"TransferredProductAmount":10
+				}
+			},
+			"dictionaryToBeFound":"Information",
+			"salesStartTimestamp":1597573200,
+			"PricePerKG":3
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Create the CBOR of an array",
+		"zencode":"Given I have a 'string array' named 'myArrayToBeHashed' \r\nWhen I create the cbor of 'myArrayToBeHashed' \r\nWhen I rename the 'cbor' to 'myArrayInCBOR'\r\nThen print 'myArrayInCBOR'",
+		"keys":{
+			"myArrayToBeHashed":[
+				"john@beatles.com",
+				"paul@beatles.com",
+				"ringo@beatles.com",
+				"george@beatles.com"
+			]
+		},
+		"data":""
+	},
+	{
+		"name":"separator",
+		"separator":"1",
+		"title":"[R]Restroom-mw: these contain statements that only work as API"
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Http: read the output of an endpoint",
+		"zencode":"# The \"Rule unknown ignore\" is required when using a restroom-mw statement\r\nRule unknown ignore \r\n\r\n# we'll need to create a keypair to produce an ECDSA signature later\r\nScenario 'ecdh': Create the keypair\r\nGiven that I am known as 'Alice'\r\n\r\n# Those are restroom-mw statements: define the endpoints\r\nGiven that I have an endpoint named 'endpoint' \r\nGiven that I have an endpoint named 'timeServer' \r\n\r\n# We need those object to store the output of the endpoints\r\nGiven I have a 'string dictionary' named 'dataFromEndpoint'\r\nGiven I have a 'number' named 'timestamp'\r\n\r\n# Those are restroom-mw statements: connect to endpoints and store their output into Zenroom's objects\r\nGiven I connect to 'endpoint' and save the output into 'dataFromEndpoint'\r\nGiven I connect to 'timeServer' and save the output into 'timestamp'\r\n\r\n# Create a string dictionary to format the output \r\nWhen I create the 'string dictionary'\r\nand I rename the 'string dictionary' to 'outputData'\r\n\r\n# Organize the output of the endpoints in the string dictionary\r\nWhen I insert 'dataFromEndpoint' in 'outputData'\r\nWhen I insert 'timestamp' in 'outputData'\r\n\r\n# ECDSA signature\r\nWhen I create the keypair\r\nWhen I create the signature of 'outputData'\r\nWhen I rename the 'signature' to 'outputData.signature'\r\n\r\n# Printing the output\r\nThen print the 'outputData'\r\nThen print the 'outputData.signature'",
+		"keys":{
+			"endpoint":"https://apiroom.net/api/dyneorg/512-bits-random-generator",
+			"timeServer":"http://showcase.api.linx.twenty57.net/UnixTime/tounix?date=now"
+		},
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Http: send the output to an endpoint via REST call",
+		"zencode":"Rule unknown ignore \r\nScenario 'ecdh': Create the keypair \r\n\r\n# [R] Restroom-mw statements: state endpoints\r\nGiven that I have an endpoint named 'timeServer'  \r\nGiven that I have an endpoint named 'outputEndpoint'  \r\n\r\n# We need this object to store the output of the timestamp endpoint\r\nGiven I have a 'number' named 'timestamp'\r\n\r\n# [R] Restroom-mw statements: connect to endpoints and store the output\r\nGiven I connect to 'timeServer' and save the output into 'timestamp'\r\n\r\n# Let's create an array of random objects\r\nWhen I create the array of '8' random objects of '256' bits\r\nand I rename the 'array' to 'randomArray'\r\n\r\n# Create a string dictionary to format the output \r\nWhen I create the 'base64 dictionary'\r\nand I rename the 'base64 dictionary' to 'outputData'\r\n\r\n# Organize the output of the endpoints in the string dictionary\r\nWhen I insert 'timestamp' in 'outputData'\r\nWhen I insert 'randomArray' in 'outputData'\r\n\r\n# Informative string\r\nWhen I write string 'see the results in https://beeceptor.com/console/dyneorg' in 'outputString'\r\n\r\n# Print the output\r\nThen print all data\r\n\r\n# [R] Restroom-mw statements: send the output to an endpoint via a REST call  \r\nThen pass the output to 'outputEndpoint'\r\n\r\n\r\n",
+		"keys":{
+			"timeServer":"http://showcase.api.linx.twenty57.net/UnixTime/tounix?date=now",
+			"outputEndpoint":"https://dyneorg.free.beeceptor.com"
+		},
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Http: match zero knowledge proof with verifier published online",
+		"zencode":"#\r\n# The \"Rule unknown ignore\" is needed when executing Restroom-mw statements\r\n#\r\nRule unknown ignore \r\n#\r\n# Here we need both credential and ecdh scenarios \r\nScenario 'credential': verify a proof \r\nScenario 'ecdh': ECDSA signature \r\n\r\n# This is the setup of the user, with a keypair, credential keypair and signed credential \r\nGiven that I am known as 'User123' \r\nand I have my valid 'credential keypair' \r\nand I have my valid 'credentials'\r\nand I have my valid 'keypair'\r\n\r\n# We need this object to store the output of the timestamp server and the verifier \r\nGiven I have a 'number' named 'timestamp'\r\nGiven I have a 'string dictionary' named 'DyneOrgIssuer1-verifier'\r\n\r\n\r\n# [R] Restroom-mw statements: state the endpoints that will be used\r\nGiven that I have an endpoint named 'timeServer'  \r\nGiven that I have an endpoint named 'outputEndpoint'  \r\nGiven that I have an endpoint named 'DyneOrgIssuer1-publish-verifier'  \r\n\r\n# [R] Restroom-mw statements: connect to endpoints and store the output\r\nGiven I connect to 'timeServer' and save the output into 'timestamp'\r\nGiven I connect to 'DyneOrgIssuer1-publish-verifier' and save the output into 'DyneOrgIssuer1-verifier'\r\n\r\n# This step checks that the verifier is cryptographically correct, part of the credential scenario \r\nGiven I have a valid 'verifier' inside 'DyneOrgIssuer1-verifier' \r\n\r\n# Here we are generating the proof in real time. The proof is an anomyzed version of the credentials, \r\n# that changes everytime, making it impossible, to track the user when performing multiple operations on a blockchain\r\nWhen I aggregate the verifiers \r\nWhen I create the credential proof\r\n\r\n\r\n# Here we are matching the proof with the verifier, meaning that we're checking that \r\n# the proof is valid, completing the zero knowledge proof flow. \r\n# If the verifier doesn't match with the proof, Zenroom stops the execution of the smart contract.\r\n# if the proof was generated in advance, and printed out along with the output of the contract, \r\n# the match could be done by nodes on a blockchain, having a consensus algorythm to approve the transaction.\r\nWhen I verify the credential proof \r\n\r\n\r\n# ------------------------- \r\n# Anything beyond this point will be executed only if the proof (the anonymized credential) is verified\r\n# ------------------------- \r\n\r\nWhen I write string 'The proof matched the verifier, hurrah!' in 'matchString'\r\n\r\n# Let's create an array of random objects, just for fun\r\nWhen I create the array of '8' random objects of '256' bits\r\nand I rename the 'array' to 'randomArray'\r\n\r\n# Create a string dictionary to format the output \r\nWhen I create the 'base64 dictionary'\r\nand I rename the 'base64 dictionary' to 'outputData'\r\n\r\n# Organize the output of the endpoints in the string dictionary\r\nWhen I insert 'timestamp' in 'outputData'\r\nWhen I insert 'randomArray' in 'outputData'\r\n\r\n# Create the ECDSA signature of the outputData\r\nWhen I create the signature of 'outputData'\r\nand I rename the 'signature' to 'outputData.signature'\r\n\r\n# Informative string\r\nWhen I write string 'see the results in https://beeceptor.com/console/dyneorg' in 'outputString'\r\n\r\n# let's organize the strings printed out into a dictionary\r\nWhen I create the 'string dictionary'\r\nand I rename the 'string dictionary' to 'miscStrings'\r\n\r\nWhen I insert 'outputString' in 'miscStrings'\r\nWhen I insert 'matchString' in 'miscStrings'\r\n\r\n# Print the output\r\nThen print the 'outputData'\r\nThen print the 'outputData.signature'\r\nThen print the 'miscStrings'\r\n\r\n# uncomment the line below to experience the Apocalypse of Data (TM)\r\n# Then print all data\r\n\r\n# [R] Restroom-mw statements: send the output to an endpoint via a REST call  \r\nThen pass the output to 'outputEndpoint'\r\n\r\n\r\n",
+		"keys":{
+			"timeServer":"http://showcase.api.linx.twenty57.net/UnixTime/tounix?date=now",
+			"outputEndpoint":"https://dyneorg.free.beeceptor.com",
+			"DyneOrgIssuer1-publish-verifier":"https://apiroom.net/api/dyneorg/DyneOrgIssuer1-publish-verifier",
+			"User123":{
+				"credential_keypair":{
+					"private":"vrG1SOnklr5Lhn0xcyvQ+oYmn7wlezRS4eubG5X/KJc=",
+					"public":"AwHYBo1n2aEbFNJy4lOfiIO6rrhHrQLL9BiNv7LFwsTFTfsKo10xUYmtZZy5hyOscw=="
+				},
+				"credentials":{
+					"h":"A1HCRwPSlkko5gz7hgTCSnZEZmzcBf/UuIp2IIuIUnxJBT8xPsEczldpqEYffVkGjw==",
+					"s":"A0xPuMVnBdHftKscon4Z+tf5BskJRacRBIZc7r0unV+GSmY4xYC42xR/w549ya9hag=="
+				},
+				"keypair":{
+					"private_key":"xY9kZtMd3aL1NctnD3jwBaHPkSQKD7OuF5w9AG6o4ik=",
+					"public_key":"BBkBxi/xvA/EXPajxr74mr1hGyADq/1mR3ML1S4edbF6LHZ2xANOWVc99ApdnHW+47d4/LEdfalqYnN1OdyQfy4="
+				}
+			}
+		},
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Sawroom: write data in a blockchain batch",
+		"zencode":"Rule unknown ignore\r\nrule check version 1.0.0\r\n\r\n#Here we define a timestamp server, we connect to it and save the output into a Zenroom object \r\nGiven that I have an endpoint named 'timeServer' \r\nGiven I have a 'number' named 'timestamp'\r\nGiven I connect to 'timeServer' and save the output into 'timestamp'\r\n\r\n# Here we define the endpoint where Sawroom can be reached\r\nGiven that I have a sawroom endpoint named 'sawroomEndpoint'\r\n\r\n# Here we define a \"context id\" that is used by Sawroom to generated the batch id, which is unique and allows you to later retrieve data.\r\n# The \"context id\" can have an arbitrary value. You can also write more than one batch at once\r\nGiven that I have an id for a sawroom context named 'myContextId1'\r\n\r\n\r\n# Here we create some random numbers\r\nWhen I create the random object of '128' bits\r\nWhen I create the array of '3' random objects of '256' bits\r\nWhen I rename the 'array' to 'myRandomArray'\r\n\r\nWhen I create the 'base64 dictionary'\r\nand I rename the 'base64 dictionary' to 'JSONOutput'\r\n\r\nWhen I insert 'myRandomArray' in 'JSONOutput'\r\nWhen I insert 'timestamp' in 'JSONOutput'\r\n\r\n# Here we print the output \r\n\r\nThen print the 'JSONOutput'\r\n# Then print the 'myRandomArray'\r\n\r\n\r\n# Here we ask Sawroom to save the data: If saving the data has succeded, Sawroom will return a batch id for each \"context id\" used\r\n# An arbitrary JSON object can be stored on chain \r\nThen I ask sawroom to save the data named 'JSONOutput' with the context id 'myContextId1'\r\n\r\n# Currently you can not chain other Restroom-mw middlewares to the \"Sawroom\" middleware, for example you can random_object\r\n# send the output to an http endpoint or store it on a database ",
+		"keys":{
+			"sawroomEndpoint":"http://195.201.41.35",
+			"myContextId1":"andrea3-0Uu+Ldk04+JSw9V0TQW2ufZuxe1v3K8jffunxxLLI0o=",
+			"timeServer":"http://showcase.api.linx.twenty57.net/UnixTime/tounix?date=now"
+		},
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Sawroom: read data from a blockchain batch",
+		"zencode":"Rule unknown ignore\r\n\r\n# Here we are definining the \"endpoint\" to connect where Sawroom is located\r\nGiven I have a 'string' named 'endpoint'\r\n\r\n# The \"batch ID\" is a unique indicator to retrieve data in Sawroom, it's returned by Sawroom when writing data \r\nAnd I have a 'string' named 'batchId1'\r\n\r\n# Here we are formatting the output of the reading \r\nAnd I have a 'string dictionary' named 'sawroom'\r\n\r\n# Here we are qctually connecting to Sawroom and retrieving the batch \r\n#\r\n# Currently you can read only one batch at a time.\r\n#\r\nAnd I connect the sawroom endpoint 'endpoint' and read the batch with id 'batchId1' and save the output into 'sawroom'\r\nThen print all data",
+		"keys":{
+			"endpoint":"http://195.201.42.48",
+			"batchId1":"c927aba7a0528095347cedbe1320b9e2c84e23f5823d53bce194f96e35765f774e15f97c33f52ef8bb89d097c71e18bd90f2fe5f368a88ad5856f08aa8f17b84"
+		},
+		"data":""
+	},
+	{
+		"name":"separator",
+		"separator":"1",
+		"title":"Zero knowledge proof flow"
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Participant] generates its credential keypair",
+		"zencode":"Scenario 'credential': credential keygen \nGiven that I am known as 'Alice' \nWhen I create the credential keypair \nThen print my 'credential keypair'",
+		"keys":{
+			
+		},
+		"data":{
+			
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Participant] generates a credential request",
+		"zencode":"Scenario 'credential': create request \nGiven that I am known as 'Alice' \nand I have my valid 'credential keypair' \nWhen I create the credential request \nThen print my 'credential request'",
+		"keys":{
+			"Alice":{
+				"credential_keypair":{
+					"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				}
+			}
+		},
+		"data":{
+			
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Credential Issuer] generate its issuer keypair",
+		"zencode":"Scenario 'credential': issuer keygen \nGiven that I am known as 'MadHatter' \nWhen I create the issuer keypair \nThen print my 'issuer keypair'",
+		"keys":{
+			
+		},
+		"data":{
+			
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Credential Issuer] generates its issuer verifier",
+		"zencode":"Scenario 'credential': publish verifier \nGiven that I am known as 'MadHatter' \nand I have my valid 'issuer keypair' \nThen print my 'verifier' from 'issuer keypair'",
+		"keys":{
+			"MadHatter":{
+				"issuer_keypair":{
+					"issuer_sign":{
+						"x":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+						"y":"x83wJ6rYhwowX/q4R0fNiE87JD4R48U1lBN21OgFJoE="
+					},
+					"verifier":{
+						"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+						"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+					}
+				}
+			}
+		},
+		"data":{
+			
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Credential Issuer] signs the credential request from the participant",
+		"zencode":"Scenario 'credential': issuer sign \nGiven that I am known as 'MadHatter' \nand I have my valid 'issuer keypair' \nand I have a 'credential request' inside 'Alice' \nWhen I create the credential signature \nThen print the 'credential signature' \nand print the 'verifier' \n",
+		"keys":{
+			"MadHatter":{
+				"issuer_keypair":{
+					"issuer_sign":{
+						"x":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+						"y":"x83wJ6rYhwowX/q4R0fNiE87JD4R48U1lBN21OgFJoE="
+					},
+					"verifier":{
+						"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+						"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+					}
+				}
+			}
+		},
+		"data":{
+			"Alice":{
+				"credential_request":{
+					"c":{
+						"a":"AzrRluPiu1LhGgkTtSbu+LxXdq+S+ZqfNmJpM19ftlHLqhOz5lzW5Ysl+YWQXkcpzQ==",
+						"b":"AjU93eUykBZ9Yk2Bxz46qzSZFn5meimHpV6ggCpkU1FAYXfb+QHRLxNWue2asJPEXg=="
+					},
+					"commit":"AjwsP75suT4khOIex370BdB73MT4/p2fSV6saO3Hynq+98pCuzCML8jotVDbZJ6r+Q==",
+					"pi_s":{
+						"c":"wk3y7OlRQGV4ajJoBQK0/G+UpvHfnCA3s3JODTOUZHI=",
+						"rk":"ZfNmO6vhmZjRy82JCcdBFX/YUcWW5F3sE9LMIVm0xv4=",
+						"rm":"j2W83+CLDtcC5qlRwd2932jC2EsCXHRJUSULOGr7I+s=",
+						"rr":"hhQEAPgIiovwdKjdNLnpDzBPOReCeUL9+6z8A+6JNBw="
+					},
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				}
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Participant] aggregates the signed credential and its keypair ",
+		"zencode":"Scenario 'credential': aggregate signature \nGiven that I am known as 'Alice' \nand I have my valid 'credential keypair' \nand I have a valid 'credential signature' \nWhen I create the credentials \nThen print my 'credentials' \nand print my 'credential keypair' \n",
+		"keys":{
+			"Alice":{
+				"credential_keypair":{
+					"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				}
+			}
+		},
+		"data":{
+			"credential_signature":{
+				"a_tilde":"A0NjF65ns64jUX1VYTbGT1z3cLSEJpITrgJwYX2NEt5RfICjsV0Sg8VLHYrlhvCMbQ==",
+				"b_tilde":"AhzMEbdDulC5f3ZWY4x8urBWJEx5wJ0MCH8Lpfik7Ct/Kfs3B2EnrtZENXIkQNX0aw==",
+				"h":"AkQZOK1VTQK59NJPTovzuX4I6mp9dxNBquPy9+Ulhl3KsCZLmDSuq8g3mX8xOUagRw=="
+			},
+			"verifier":{
+				"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+				"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Participant] creates an anonymised proof",
+		"zencode":"Scenario 'credential': create proof \nGiven that I am known as 'Alice' \nand I have my valid 'credential keypair' \nand I have a valid 'verifier' inside 'MadHatter' \nand I have my valid 'credentials' \nWhen I aggregate the verifiers \nand I create the credential proof \nThen print the 'credential proof' \n",
+		"keys":{
+			"Alice":{
+				"credential_keypair":{
+					"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				},
+				"credentials":{
+					"h":"AkQZOK1VTQK59NJPTovzuX4I6mp9dxNBquPy9+Ulhl3KsCZLmDSuq8g3mX8xOUagRw==",
+					"s":"Agfy9VMLdrj+T2FpyUbvyy0e7Eknyd703FyDRdMgjvOPATmfT57BeUStNmftFGiI6w=="
+				}
+			}
+		},
+		"data":{
+			"MadHatter":{
+				"verifier":{
+					"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+					"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+				}
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Anybody] checks that the anonymised proof matches with the verifier",
+		"zencode":"Scenario 'credential': verify proof \nGiven that I have a valid 'verifier' inside 'MadHatter' \nand I have a valid 'credential proof' \nWhen I aggregate the verifiers \nand I verify the credential proof \nThen print 'Success: Zenroom has verified that the credentials match the verifiers!' as 'string' \n",
+		"keys":{
+			"credential_proof":{
+				"kappa":"Mzu1DO4sAyN8kWZZFso4uh+MPOnrVeYPzndiDfdZZtYX090H3Qal24gt25lgWeXCTCQ85RMTMyJoBwuf8UsNSsFTDMaatFOwIhwNKtXUWJAlCS84etzrssiDf1YJMkDxJTdmUgMWTX8IzfBuKKWA7TXXfQNLU8GJwfp7u0F2kguu18egkru9Y+yIEB9Da7KKB0e9D25pUoSbFku5976N6Da6ITrJFTtQehp7ETrv5HljJju7klJDcB3Y/jcgFtAZ",
+				"nu":"Ak7Wh7NS7RS/V9y4f+qp8Whyy4ngu5RtMWrtayOhnFYx/BmYfdOr+FMCgellYeLMEA==",
+				"pi_v":{
+					"c":"bTujZmxLhvgyZAlGhep1bkpFABKNNqmampbFSTgA134=",
+					"rm":"GDMB+aiS7CTnqWQKM0Zdaj2obklDM9c7Oeax2WSpFMo=",
+					"rr":"Iy/IpWWbXGsfvLk2dV08LYNjgXuRQBuxZDDrfXIj80A="
+				},
+				"sigma_prime":{
+					"h_prime":"A0hHje7Fxq18sSnqIpOOFpXuoo5By5AQ85v06G8ELkSBueJ2NqcIXDah8lckGn4v3g==",
+					"s_prime":"AknuLfJozLlwTGADWujM3p3+PXiMyFQwe4N4+o0plfvlcAB5Bd/zMln5JnMKrLsxZw=="
+				}
+			}
+		},
+		"data":{
+			"MadHatter":{
+				"verifier":{
+					"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+					"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+				}
+			}
+		}
+	},
+	{
+		"name":"separator",
+		"separator":"1",
+		"title":"Secret sharing"
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Create 9 shares, with quorum of 5",
+		"zencode":"# Let's define the scenario, we'll need the 'secshare' here\r\nScenario secshare: create a shared secret\r\n\r\n# We'll start from a secret, which can be max 32 bytes in length\r\nGiven I have a 'string' named '32BytesSecret'\r\n\r\n# Here we are creating the \"secret shares\", the output will be an array of pairs of numbers\r\n# The quorum represents the minumum amount of secret shares needed to\r\n# rebuild the secret, and it can be configured\r\nWhen I create the secret shares of '32BytesSecret' with '9' quorum '5'\r\n\r\n# Here we rename the output and print it out\r\nand I rename the 'secret shares' to 'mySharedSecret'\r\nThen print the 'mySharedSecret'",
+		"keys":{
+			"32BytesSecret":"myMilkshakeBringsAllTheBoysTo..."
+		},
+		"data":""
+	},
+	{
+		"author":"Dyne.org",
+		"name":"Recompose the secret from 5 shares (out of 9)",
+		"zencode":"Scenario secshare: recompose the secret shares\r\n\r\n# Here we are loading the \"secret shares\" \r\nGiven I have a 'secret shares' named 'my5partsOfTheSharedSecret'\r\n\r\n# Here we are testing if the secret shares can be recomposed to form the password\r\n# in case the quorum isn't reached or isn't correct, Zenroom will anyway output a string,\r\n# that will be different from the original secret.\r\n# if the quorum is correct, the original secret should be printed out.\r\nwhen I compose the secret using 'my5partsOfTheSharedSecret'\r\nThen print the 'secret' as 'string'",
+		"keys":"",
+		"data":{
+			"my5partsOfTheSharedSecret":[
+				{
+					"x":"Ut5SRQceAzJ4Tl4oQGLJtT9exHMS9MZjr8FTyeLNCoI=",
+					"y":"yOh0IHDQVQGPQshkWOcba/SoN2hzEsM/PPHw+7AoPIg="
+				},
+				{
+					"x":"XStq5PU+KhUqaPlTyskhB2SCT1JFlh6mon2/mfwtMtM=",
+					"y":"oVmB7/16L4QgHAaYottjouvyxi7w+eq1bptNN7tQtMc="
+				},
+				{
+					"x":"kLmRePcPru3of6WbNnyBsUmeKT52qkrVQsyjPQoJOGo=",
+					"y":"4sSGlM4rUxYM4LC8dwnbY+es7HaEbhWD4+JDJGegrKo="
+				},
+				{
+					"x":"tuQr29Ep4Zyi/qmw2Bv/U1qtlE3c5fT/l72Ma+lA6Pw=",
+					"y":"cCMMDuX+7CTd8Sinj6cPFw5qFh+CIt7TlPk8uM/st40="
+				},
+				{
+					"x":"6RVZxMwQHQ3LcEcmrM9D/SZV4BeC9tFGV70uBVVfCbo=",
+					"y":"hwpgXGUIGjJA/zwDo/CWkaGUU9CEZXZTq/4Yj9n9x4s="
+				}
+			]
+		}
+	},
+	{
+		"name":"separator",
+		"separator":"1",
+		"title":"Cryptographic petition flow"
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Participant] creates a petition",
+		"zencode":"Scenario credential: read and validate the credentials \nScenario petition: create the petition \nGiven that I am known as 'Alice' \nGiven I have my valid 'credential keypair' \nGiven I have my valid 'credentials' \nGiven I have a valid 'verifier' inside 'MadHatter' \nWhen I aggregate the verifiers \nWhen I create the credential proof \nWhen I create the petition 'More privacy for all!' \nThen print the 'verifiers' \nThen print the 'credential proof' \nThen print the 'petition' \nThen print the 'uid' as 'string' inside 'petition' \n",
+		"keys":{
+			"Alice":{
+				"credential_keypair":{
+					"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				},
+				"credentials":{
+					"h":"AkQZOK1VTQK59NJPTovzuX4I6mp9dxNBquPy9+Ulhl3KsCZLmDSuq8g3mX8xOUagRw==",
+					"s":"Agfy9VMLdrj+T2FpyUbvyy0e7Eknyd703FyDRdMgjvOPATmfT57BeUStNmftFGiI6w=="
+				}
+			}
+		},
+		"data":{
+			"MadHatter":{
+				"verifier":{
+					"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+					"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+				}
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Issuer] approves a petition",
+		"zencode":"Scenario credential \nScenario petition: approve \nGiven that I have a 'verifier' inside 'MadHatter' \nGiven I have a 'credential proof' \nGiven I have a 'petition' \nWhen I aggregate the verifiers \nWhen I verify the credential proof \nWhen I verify the new petition to be empty \nThen print the 'petition' \nThen print the 'verifiers' \nThen print the 'uid' as 'string' inside 'petition' \n",
+		"keys":{
+			"credential_proof":{
+				"kappa":"AfZSqhTLEpN89XRwDpJxVt0WFMROqjF79/jEFzabK6PIGG48OZxvFWIeBYHUoPfCQCVSyxmvjmOsI7U1kbhotZh/ALHSiX4Zm6b9r3Nd0f3ci29J0VsARJfH6wGeSVIBJUChnGA4eomLHUn7WvPSYoXX3o0ml3mVd/xBraSabJnQu55NvSO53rHoLXzYADb7N82f5AiEHi59doRMLAN2FjlfQqmzGn17YVsKZ9uhEgJKvbx60Y2OGS3ZF2ZQHv6c",
+				"nu":"Az/ghlqU+62naAnmBf+tDwHykLylYMrp5iJ+kxbxL/k6MV9HmPO/1Okgxi5dxKAyug==",
+				"pi_v":{
+					"c":"bh8rhYEnfWf8RK9kYzEEr2Z8aoEQS0AJhiboxyPitRM=",
+					"rm":"WtkKFWMPTaJEDUOzVf9PHYX9GcDtXYpdPCQuLLv9DaY=",
+					"rr":"TwaTF6QhVzORa87H6Ig+/ywXr/Iz236dqQh1Zy48FYA="
+				},
+				"sigma_prime":{
+					"h_prime":"AyVj2emdk4+XxYpL6GQjjJYDDQY9u/jUIRx/qh4LOAnbFnQnpbKRWsj0qduO+tBXbQ==",
+					"s_prime":"Ag3+2tnthyDX8U9W9T6fLcGh3Mw7H1M1Lm72IOHo9xlk0PxH+9FVnKW9wTd+zjdd+Q=="
+				}
+			},
+			"petition":{
+				"owner":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+				"scores":{
+					"neg":{
+						"left":"f38=",
+						"right":"f38="
+					},
+					"pos":{
+						"left":"f38=",
+						"right":"f38="
+					}
+				},
+				"uid":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh"
+			},
+			"uid":"More_privacy_for_all!",
+			"verifiers":{
+				"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+				"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+			}
+		},
+		"data":{
+			"MadHatter":{
+				"verifier":{
+					"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+					"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+				}
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Participant] signs the petition ",
+		"zencode":"Scenario credential \nScenario petition: sign petition \nGiven I am 'Alice' \nGiven I have my valid 'credential keypair' \nGiven I have my 'credentials' \nGiven I have a valid 'verifier' inside 'MadHatter' \nWhen I aggregate the verifiers \nWhen I create the petition signature 'More privacy for all!' \nThen print the 'petition signature' \n",
+		"keys":{
+			"Alice":{
+				"credential_keypair":{
+					"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				},
+				"credentials":{
+					"h":"AkQZOK1VTQK59NJPTovzuX4I6mp9dxNBquPy9+Ulhl3KsCZLmDSuq8g3mX8xOUagRw==",
+					"s":"Agfy9VMLdrj+T2FpyUbvyy0e7Eknyd703FyDRdMgjvOPATmfT57BeUStNmftFGiI6w=="
+				}
+			}
+		},
+		"data":{
+			"MadHatter":{
+				"verifier":{
+					"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+					"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+				}
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Service/Anyone] aggregate petition signatures",
+		"zencode":"# Note: this script should normally output the same files 'petitionApproved.json' that it takes as input, \n# in this script a different file is produced out of mere convenience in the testing phase.  \nScenario credential \nScenario petition: aggregate signature \nGiven that I have a valid 'petition signature' \nGiven I have a valid 'petition' \nGiven I have a valid 'verifiers' \nWhen the petition signature is not a duplicate \nWhen the petition signature is just one more \nWhen I add the signature to the petition \nThen print the 'petition' \nThen print the 'verifiers' \n",
+		"keys":{
+			"petition":{
+				"owner":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+				"scores":{
+					"neg":{
+						"left":"f38=",
+						"right":"f38="
+					},
+					"pos":{
+						"left":"f38=",
+						"right":"f38="
+					}
+				},
+				"uid":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh"
+			},
+			"uid":"More_privacy_for_all!",
+			"verifiers":{
+				"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+				"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+			}
+		},
+		"data":{
+			"petition_signature":{
+				"proof":{
+					"kappa":"EFpStcfpAhdGAZVBKShFqOEMDSqmik7NYR6LDgVoQZYskaY9mXwRd28N/eZ/QX+BAmXMkIWWJay8z99tFLLSB1/P50ewQ1Cpk1VQg86gg2fZMk2NE4S8qkb4YvQMsh/DDOICDKYkndcvASj4Q5hy9L6OePbwuqyd2DprOH6dcpTBVeLbhZ36ekH49GpMbBIIJhEEfllUSfpV0yBAfFwb2EpAhLnk0+SFTGQIJhzaXRyxjrwOhDzhocdR1FrcbDBr",
+					"nu":"A0tPxxY6vhhaTujENsqO2Dxuzr7ZdsgnTIuWtmdFMBL6Rq49zESBpEC/ED0qsErIDA==",
+					"pi_v":{
+						"c":"tU1CznJeTILLf9+otyo4wplz460FhRIJYwzVFN7rqXo=",
+						"rm":"lzbxa2o22nGoV2moXyTOZ5+5fOxXfbHdQBZKLjiHDEw=",
+						"rr":"kpXgD+roREaabejB2iv6IXpUBSxmLmALh/WUfHLuBwY="
+					},
+					"sigma_prime":{
+						"h_prime":"Aw3ZtGYgJdiAPxqNpO4jhTS2lbAeXMSlE7HLd1qKMrufREGvnoTx2QbzilE/DkO2tQ==",
+						"s_prime":"AigHHPcvR1ftxAvSEjvba9adIZnzM7+CGHrrYLa8fN4XIXkEpegY2O/ueSNCKswfLg=="
+					}
+				},
+				"uid_petition":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh",
+				"uid_signature":"AxiT1yJJYEOvv6JctsjgH0pVQQK0XKkOSpXEY0DYUeoRy104Irg6a0He50jZh6Bvgg=="
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Service/Anyone] tally the petition",
+		"zencode":"# The tally is the closing of the petition: you can only add signatures until the tally, \n# and can only count the signatures after the tally. \nScenario 'credential' \nScenario 'petition': tally the petition \nGiven that I am 'Alice' \nGiven I have my valid 'credential keypair' \nGiven I have a valid 'petition' \nWhen I create a petition tally \nThen print all data \n",
+		"keys":{
+			"Alice":{
+				"credential_keypair":{
+					"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+					"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+				},
+				"credentials":{
+					"h":"AkQZOK1VTQK59NJPTovzuX4I6mp9dxNBquPy9+Ulhl3KsCZLmDSuq8g3mX8xOUagRw==",
+					"s":"Agfy9VMLdrj+T2FpyUbvyy0e7Eknyd703FyDRdMgjvOPATmfT57BeUStNmftFGiI6w=="
+				}
+			}
+		},
+		"data":{
+			"petition":{
+				"list":[
+					"AxiT1yJJYEOvv6JctsjgH0pVQQK0XKkOSpXEY0DYUeoRy104Irg6a0He50jZh6Bvgg=="
+				],
+				"owner":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+				"scores":{
+					"neg":{
+						"left":"AhSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+						"right":"AiYOfisKWOmEom+LysYHrPopraIWBWNydmMK0PMT8gs/3okQdorm4mDgcCgLtHHauA=="
+					},
+					"pos":{
+						"left":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+						"right":"Ai1UU7k1uPNomHeBH65UcRX2guN0OzTlcCk6rnMdqOMRKM1KrtDLl6biwHoWEHDZGg=="
+					}
+				},
+				"uid":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh"
+			},
+			"verifiers":{
+				"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+				"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+			}
+		}
+	},
+	{
+		"author":"Dyne.org",
+		"name":"[Service/Anyone] count the signatures",
+		"zencode":"Scenario 'credential' \nScenario 'petition': count the signatures in the petition \nGiven that I have a valid 'petition' \nGiven I have a valid 'petition tally' \nWhen I count the petition results \nThen print the 'petition results' as 'number' \nThen print the 'uid' inside 'petition' \n",
+		"keys":{
+			"credential_keypair":{
+				"private":"zK8Gs70vdLRErIKkTQdNbWfrWIExirgMKSxfGuPa1aU=",
+				"public":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow=="
+			},
+			"petition":{
+				"list":[
+					"AxiT1yJJYEOvv6JctsjgH0pVQQK0XKkOSpXEY0DYUeoRy104Irg6a0He50jZh6Bvgg=="
+				],
+				"owner":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+				"scores":{
+					"neg":{
+						"left":"AhSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+						"right":"AiYOfisKWOmEom+LysYHrPopraIWBWNydmMK0PMT8gs/3okQdorm4mDgcCgLtHHauA=="
+					},
+					"pos":{
+						"left":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+						"right":"Ai1UU7k1uPNomHeBH65UcRX2guN0OzTlcCk6rnMdqOMRKM1KrtDLl6biwHoWEHDZGg=="
+					}
+				},
+				"uid":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh"
+			},
+			"petition_tally":{
+				"c":"HLv/jcY6vT44Lya6eKYeo+e8MfKRvWgfmHgrzDSUv3s=",
+				"dec":{
+					"neg":"AyYOfisKWOmEom+LysYHrPopraIWBWNydmMK0PMT8gs/3okQdorm4mDgcCgLtHHauA==",
+					"pos":"AiYOfisKWOmEom+LysYHrPopraIWBWNydmMK0PMT8gs/3okQdorm4mDgcCgLtHHauA=="
+				},
+				"rx":"rGIBEsc0Dbno4XYsZ66dqFVnSbp1U6jtd2RwXgci+wo=",
+				"uid":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh"
+			}
+		},
+		"data":{
+			"petition":{
+				"list":[
+					"AxiT1yJJYEOvv6JctsjgH0pVQQK0XKkOSpXEY0DYUeoRy104Irg6a0He50jZh6Bvgg=="
+				],
+				"owner":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+				"scores":{
+					"neg":{
+						"left":"AhSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+						"right":"AiYOfisKWOmEom+LysYHrPopraIWBWNydmMK0PMT8gs/3okQdorm4mDgcCgLtHHauA=="
+					},
+					"pos":{
+						"left":"AxSggI9xzQ/RTjH2gRyFd+QHPCTqZucAihUyETUhVdJY9vohtmcGDFmEdOTHOTCeow==",
+						"right":"Ai1UU7k1uPNomHeBH65UcRX2guN0OzTlcCk6rnMdqOMRKM1KrtDLl6biwHoWEHDZGg=="
+					}
+				},
+				"uid":"TW9yZV9wcml2YWN5X2Zvcl9hbGwh"
+			},
+			"verifiers":{
+				"alpha":"P/0EVN5KUGszzll5GlO9yI3p1p80BaWp5UdJ/R4rrRYyxcBg93F3KKOEYJtrsJ4SBlxbo59jeWEi2WBRnBwClNI4YOD3ak2llLNp7y6NN3FbSKF6ZI1aoeD22rp/SUTTQVfT6vMtzXDHaE8KEWBnN87Gb5unt6tDj1kVhbE9scTV5G62ZpJBBB3aUTbQsDtCGWQlBWb0jImIaJ3ZndChwzUVy2DBnRC5nqVDzH8BJ5AtPO46qwo8M4EQ7dLPCv1h",
+				"beta":"DxkhJCeC0LmNix2Q9XZxmHKwBv6fbYymNH6PGdvnOU6uD3NhZBbp+jA27kPon1CACigQ4IT/TpUGJwoy3M0o7l2x+mxPS6akE26kMrYARNC3fbYk6N9ugbjki8WX6uPQFheJJ1ZfSiiUQ02MFmIPTDKa0bRjXTyHak41+2SbQpPU1BYreIlIrDmzP8XrEaz0H0287Mg85L/iAXdtSpOk5qRyXm+lGa6QldyYkQ22xmNN6Ch0mIb3Ds9/e8EN1bM0"
+			}
+		}
+	}
+]

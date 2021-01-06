@@ -1,0 +1,71 @@
+.user-contracts .form-check-input {
+    position: relative;
+    margin-top: 0!important;
+    margin-left: 0!important;
+}
+
+.user-contracts .form-check {
+    /* position: relative; */
+    /* display: block; */
+    padding-left: 0!important;
+}
+
+.custom-control.custom-switch input{
+    margin-top: 3px;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #28a745!important;
+    background-color: #28a745!important;
+}
+
+.user-contracts .link-text {
+    font-size: 0.8rem;
+    line-height: 0.5;
+}
+
+.link {
+    font-family: "Verdana" sans-serif;
+    font-size: 1em;
+    text-align: left;
+    color: blue;
+    background: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.popover {
+    max-width: none!important;
+}
+
+.circle {
+    background-color: #fff;
+    border: 1px solid red;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    height: 8px;
+    width: 8px;
+}
+
+.display-menu-parent .display-menu {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity 600ms, visibility 600ms;
+    transition: opacity 600ms, visibility 600ms;
+}
+
+.display-menu-parent:hover .display-menu {
+    visibility: visible;
+    opacity: 1;
+}
+
+.arrow {
+    border: none;
+}
